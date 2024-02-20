@@ -28,7 +28,7 @@ exports.addExpense =  async (req , res) => {
 exports.getExpense =  async (req , res) => {
     
     try {
-        console.log("req.body exp" , req) ; 
+        // console.log("req.body exp" , req) ; 
         const expenses = await ExpenseSchema.find({name:req.query.name}).sort({createdAt: -1})
         res.status(200).json(expenses)
     } catch (error) {

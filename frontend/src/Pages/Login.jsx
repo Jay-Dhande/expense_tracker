@@ -9,7 +9,7 @@ import { useGlobalContext } from '../context/GlobalContext';
 
 
 const Login = (props) => {
-  const {setUser} = useGlobalContext() ; 
+  // const {setUser} = useGlobalContext() ; 
   
   const [userData,setuserData]=useState({name:"", passWord:""})
   const loginHandler=async(e)=>{
@@ -25,12 +25,10 @@ const Login = (props) => {
         //make islogged in true
         props.setIsLoggedIn(true)
         props.setUserName(userData.name) ;
-        setUser(userData.name)  ; 
+        // setUser(userData.name)  ; 
         
       }
-      else{
-        
-      }
+      
     } catch (error) {
       console.error(error);
     }

@@ -3,9 +3,17 @@ import styled from 'styled-components'
 import avatar from '../img/avatar.png'
 import { menuItems } from '../utils/menuItems';
 import { signout } from '../utils/Icons';
+import { useNavigate } from 'react-router-dom';
 
-
-export default function Navigation({active , setActive}) {
+export default function Navigation(props) {
+    const navigate=useNavigate();
+  const handleSignOut = () => {
+    // setActive(1)
+    console.log("clicked signOut") ; 
+    console.log(props.setIsLoggedIn) ; 
+    props.setIsLoggedIn(false) ; 
+    navigate("/") ; 
+  }
   return (
     <NavStyled>
         <div className="user-con">
@@ -19,8 +27,8 @@ export default function Navigation({active , setActive}) {
                 {menuItems.map((item) => {
                     return <li
                         key={item.id}
-                        onClick={() => setActive(item.id)}
-                        className={active === item.id? 'active':''}
+                        onClick={() => props.setActive(item.id)}
+                        className={props.active === item.id? 'active':''}
                     >
                         {item.icon}
                         <span>{item.title}</span>
@@ -29,11 +37,12 @@ export default function Navigation({active , setActive}) {
             </ul>
 
             
-        <div className="bottom-nav">
-            <li>
+       
+            <button className="bottom-nav" onClick={handleSignOut}>
                 {signout} Sign Out 
-            </li>
-        </div>
+            </button>
+           
+        
     </NavStyled>
   )
 }
@@ -113,4 +122,15 @@ const NavStyled = styled.nav`
             border-radius: 0 10px 10px 0;
         }
     }
+    .bottom-nav{
+        cursor: pointer;
+        padding: 7px;
+        background-color: #fcf6f9;
+        font-size: large;
+        border: 0px solid ;
+    }
+    .bottom-nav:active{
+        color: black;
+    }
+    
 `;

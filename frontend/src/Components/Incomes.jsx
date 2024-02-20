@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { InnerLayout } from '../styles/Layouts'
 import { useGlobalContext } from '../context/GlobalContext'
@@ -10,27 +10,34 @@ import IncomeItem from './IncomeItem';
 export default function Incomes() {
 
     const {addIncome,incomes, getIncomes, deleteIncome, totalIncome} = useGlobalContext()
+    
+    console.log("income page setusername" , localStorage.getItem("name"));
+    
+    const setUserName= localStorage.getItem("name") ; 
 
     useEffect(() =>{
-        getIncomes(localStorage.getItem("name"))
+        getIncomes(setUserName)
     }, [])
+    console.log("incomes inc" , incomes) ; 
+    // const [username ,setUserName] = useState('') ; 
 
-
+    const inc = incomes.filter((income) => income.name===setUserName) ; 
+    console.log("inc" , incomes) ;
   return (
     <IncomesStyled>
         <InnerLayout>
         <h1>Incomes</h1>
         <h2 className="total-income">
-            Total Income : <span>{totalIncome(localStorage.getItem("name"))}</span>
+            Total Income : <span>{totalIncome(setUserName)}</span>
         </h2>
 
         <div className="income-content">
             <div className="form-container">
-                    <Form />
+                    <Form  />
                 </div>
                 
                 <div className="incomes">
-                    {incomes.filter((income) => income.name===localStorage.getItem("name")).map((income) => {
+                    {incomes.map((income) => {
                       const {_id, title, amount, date, category, description, type ,name} = income;
                       return <IncomeItem
                           key={_id}

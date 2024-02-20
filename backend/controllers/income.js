@@ -38,10 +38,10 @@ exports.getIncomes =  async (req , res) => {
 exports.deleteIncome = async (req , res) => {
     const id =req.params.id ;
     // const {name} =req.params.name ;  
-    console.log("del req recieved "); 
+    // console.log("del req recieved "); 
     // console.log(" req " , req) ;
     // console.log("req body" , req.body) ; 
-    console.log("req params"  , req.params) ; 
+    // console.log("req params"  , req.params) ; 
     // console.log("req query" ,req.query ) ; 
 
 

@@ -12,14 +12,15 @@ import { plus } from '../utils/Icons';
 export default function Form() {
 
     const { addIncome , getIncomes , setError ,error} = useGlobalContext()
-
+    const setUserName = localStorage.getItem("name") ; 
+    
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
         category: '',
         description: '',
         date: '',
-        name:localStorage.getItem("name")
+        name:setUserName,
     })
 
     const { title, amount,  category, description , date , name} = inputState;
@@ -36,14 +37,14 @@ export default function Form() {
         console.log("add income") ; 
            addIncome(inputState)
            console.log("income added") ;
-           getIncomes(inputState.name) ; 
+           getIncomes(setUserName) ; 
            setInputState({
             title: '',
             amount: '',
             category: '',
             description: '',
             date: '',
-            name:localStorage.getItem("name"),
+            name:setUserName,
         })
        }
        catch(err){

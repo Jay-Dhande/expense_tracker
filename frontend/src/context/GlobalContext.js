@@ -29,12 +29,20 @@ export const GlobalContextProvider  = ({children}) => {
     }
      
     const getIncomes = async (name) => {
-        const response = await axios.get(`${BASE_URL}get-incomes`  , {
-            params:{
-                name:name
-            }
-        })
-        setIncomes(response.data)
+        console.log("get inc req" , name) ;
+        try {
+            
+            const response = await axios.get(`${BASE_URL}get-incomes`  , {
+                params:{
+                    name:name
+                }
+            })
+            console.log(response.data) ; 
+
+            setIncomes(response.data)
+        } catch (error) {
+            console.log(error) ; 
+        }
     }
     
     const deleteIncome = async(ele) => {
@@ -64,7 +72,7 @@ export const GlobalContextProvider  = ({children}) => {
         // getIncomes() ; 
         
         let totalIncome = 0 ; 
-        incomes.filter((income) => (income.name)===name).forEach((income) => {
+        incomes.forEach((income) => {
              totalIncome += income.amount ; 
         });
         return totalIncome ; 
@@ -119,20 +127,20 @@ export const GlobalContextProvider  = ({children}) => {
         // getExpenses() ; 
 
         let totalExpense = 0 ; 
-        expenses.filter((expense) => expense.name === name).forEach((expense) => {
+        expenses.forEach((expense) => {
             totalExpense += expense.amount ; 
         });
         return totalExpense ; 
     }
     // console.log(totalExpense(name)) ; 
 
-   const totalBalance =(name) => {
+   const totalBalance = (name) => {
     return totalIncome(name) - totalExpense(name) ; 
    }
 
    const transactionHistory = (name) => {
 
-    const history = [...incomes.filter((income) => income.name===name), ...expenses.filter((expense) => expense.name === name)]
+    const history = [...incomes, ...expenses]
     history.sort((a, b) => {
         return new Date(b.createdAt) - new Date(a.createdAt)
     })
@@ -141,7 +149,7 @@ export const GlobalContextProvider  = ({children}) => {
 }
     
 const viewTransactions = (name) => {
-    const history = [...incomes.filter((income) => income.name===name), ...expenses.filter((expense) => expense.name === name)]
+    const history = [...incomes, ...expenses]
     history.sort((a, b) => {
         return new Date(b.createdAt) - new Date(a.createdAt)
     })

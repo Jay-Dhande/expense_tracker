@@ -37,7 +37,7 @@ export default function Chart() {
    const {incomes , expenses} = useGlobalContext() ; 
 
     const data ={
-        labels: incomes.filter(income => income.name===setName).map((income) => {
+        labels: incomes.map((income) => {
             const {date} = income
             return dateFormat(date) ; 
         }),
@@ -46,7 +46,7 @@ export default function Chart() {
             {
                 label:'Income' , 
                 data:[
-                    ...incomes.filter(income => income.name===setName).map((income) => {
+                    ...incomes.map((income) => {
                         const {amount } = income ; 
                         return amount ; 
                     })
@@ -58,7 +58,7 @@ export default function Chart() {
             {
                 label:'Expense' , 
                 data:[
-                    ...expenses.filter(income => income.name===setName).map((expense) => {
+                    ...expenses.map((expense) => {
                         const {amount } = expense ; 
                         return amount ; 
                     })

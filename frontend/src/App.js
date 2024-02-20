@@ -24,15 +24,15 @@ export default function App() {
    const displayData = () => {
       switch(active){
         case 1:
-          return <DashBoard/>
+          return <DashBoard />
         case 2:
-          return <ViewTransaction/>  
+          return <ViewTransaction />  
         case 3:
-          return <Incomes/>  
+          return <Incomes />  
         case 4:
-          return <Expenses/>
+          return <Expenses  />
         default:
-          return <DashBoard/>  
+          return <DashBoard  />  
       }
    } 
 
@@ -55,7 +55,8 @@ export default function App() {
         {isloggedIn ? (
           <MainLayout>
             {orbMemo}
-            <Navigation active={active} setActive={setActive} />
+            <Navigation active={active} setActive={setActive} isloggedIn={isloggedIn}
+                  setIsLoggedIn={setIsLoggedIn} />
             <main>{displayData()}</main>
           </MainLayout>
         ) : (
@@ -66,13 +67,14 @@ export default function App() {
                 <Login
                   isloggedIn={isloggedIn}
                   setIsLoggedIn={setIsLoggedIn}
+                  username={username}
                   setUserName={setUserName}
                 />
               }
             />
             <Route
               path="/signup"
-              element={<Signup setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isloggedIn={isloggedIn}/>}
+              element={<Signup  username={username} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isloggedIn={isloggedIn}/>}
             />
           </Routes>
         )}

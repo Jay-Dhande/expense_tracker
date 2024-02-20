@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import IncomeItem from './IncomeItem';
 
 
-export default function Expenses() {
+export default function Expenses({username , setUserName}) {
 
     const {addExpense,expenses, getExpenses, deleteExpense, totalExpense} = useGlobalContext()
 
@@ -30,7 +30,7 @@ export default function Expenses() {
                 </div>
                 
                 <div className="incomes">
-                    {expenses.filter((exp) => exp.name === localStorage.getItem("name")).map((expense) => {
+                    {expenses.map((expense) => {
                       const {_id, title, amount, date, category, description, type , name} = expense;
                       return <IncomeItem
                           key={_id}
