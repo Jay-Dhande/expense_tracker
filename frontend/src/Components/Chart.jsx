@@ -32,11 +32,12 @@ ChartJs.register(
 
 
 export default function Chart() {
-   
+    const setName = localStorage.getItem("name") ; 
+
    const {incomes , expenses} = useGlobalContext() ; 
 
     const data ={
-        labels: incomes.map((income) => {
+        labels: incomes.filter(income => income.name===setName).map((income) => {
             const {date} = income
             return dateFormat(date) ; 
         }),
@@ -45,7 +46,7 @@ export default function Chart() {
             {
                 label:'Income' , 
                 data:[
-                    ...incomes.map((income) => {
+                    ...incomes.filter(income => income.name===setName).map((income) => {
                         const {amount } = income ; 
                         return amount ; 
                     })
@@ -57,7 +58,7 @@ export default function Chart() {
             {
                 label:'Expense' , 
                 data:[
-                    ...expenses.map((expense) => {
+                    ...expenses.filter(income => income.name===setName).map((expense) => {
                         const {amount } = expense ; 
                         return amount ; 
                     })

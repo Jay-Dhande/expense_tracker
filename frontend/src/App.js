@@ -12,14 +12,15 @@ import { useGlobalContext } from "./context/GlobalContext";
 import ViewTransaction from "./Components/ViewTransaction";
 // import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Pages/Login";
-import SignUp from "./Pages/Signup"
 import Signup from "./Pages/Signup";
 
 export default function App() {
   const [active , setActive] = useState(1) ; 
   const [isloggedIn,setIsLoggedIn]=useState(false)
   const global = useGlobalContext() ; 
-  
+  const [username  , setUserName] = useState("");
+
+   
    const displayData = () => {
       switch(active){
         case 1:
@@ -52,6 +53,7 @@ export default function App() {
     <AppStyled className="App">
       {isloggedIn&&<MainLayout>
           {orbMemo}
+
         <Navigation active={active} setActive={setActive}/>
           {/* <Login/> */}
           {/* <SignUp/> */}
@@ -60,7 +62,7 @@ export default function App() {
           </main>
        
       </MainLayout>}
-      {!isloggedIn&& <Login isloggedIn={isloggedIn} setIsLoggedIn={setIsLoggedIn}/>}
+      {!isloggedIn&& <Login isloggedIn={isloggedIn} setIsLoggedIn={setIsLoggedIn} username={username} setUserName={setUserName}/>}
     </AppStyled>
     </GlobalContextProvider>
 

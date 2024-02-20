@@ -11,6 +11,12 @@ export const GlobalContextProvider  = ({children}) => {
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
+    const [isUser , setIsUser] = useState("") ; 
+
+    const setUser = (name) => {
+        setIsUser(name) ; 
+        return setIsUser ;
+    }
 
     //calculate incomes
     const addIncome = async (income) => {
@@ -21,11 +27,14 @@ export const GlobalContextProvider  = ({children}) => {
             })
         getIncomes(income.name)
     }
-
+     
     const getIncomes = async (name) => {
-        const response = await axios.get(`${BASE_URL}get-incomes`  , name)
+        const response = await axios.get(`${BASE_URL}get-incomes`  , {
+            params:{
+                name:name
+            }
+        })
         setIncomes(response.data)
-        // console.log(response.data)
     }
     
     const deleteIncome = async(ele) => {
@@ -33,7 +42,14 @@ export const GlobalContextProvider  = ({children}) => {
             const id =ele.id ; 
             const name= ele.name ; 
             console.log("trying to del") ; 
-            const res = await axios.delete(`${BASE_URL}delete-income/${id}`) ; 
+            console.log("ele :" , ele , "id :" , id , " name :" , name) ; 
+            try{
+
+                const res = await axios.delete(`${BASE_URL}delete-income/${id}`) ; 
+            }
+            catch(err){
+                console.log(err) ; 
+            }
             console.log("deleted") ; 
             getIncomes(name) ; 
         }
@@ -44,16 +60,16 @@ export const GlobalContextProvider  = ({children}) => {
 
     }
 
-    const totalIncome = () => {
+    const totalIncome = (name) => {
         // getIncomes() ; 
         
         let totalIncome = 0 ; 
-        incomes.forEach((income) => {
+        incomes.filter((income) => (income.name)===name).forEach((income) => {
              totalIncome += income.amount ; 
         });
         return totalIncome ; 
     }
-    console.log(totalIncome()) ; 
+    // console.log(totalIncome()) ; 
 
 
     // expense 
@@ -66,8 +82,20 @@ export const GlobalContextProvider  = ({children}) => {
     }
 
     const getExpenses = async (name) => {
-        const response = await axios.get(`${BASE_URL}get-expenses` , name)
-        setExpenses(response.data)
+        console.log("nameeee" ,name) ; 
+        try{
+            console.log("name" , name) ; 
+
+            const response = await axios.get(`${BASE_URL}get-expenses` , {
+                params:{
+                    name:name
+                }
+            })
+            setExpenses(response.data)
+        }
+        catch(err){
+             console.log(err) ; 
+        }
         // console.log(response.data)
     }
     
@@ -87,23 +115,24 @@ export const GlobalContextProvider  = ({children}) => {
 
     }
 
-    const totalExpense = () => {
+    const totalExpense = (name) => {
         // getExpenses() ; 
 
         let totalExpense = 0 ; 
-        expenses.forEach((expense) => {
+        expenses.filter((expense) => expense.name === name).forEach((expense) => {
             totalExpense += expense.amount ; 
         });
         return totalExpense ; 
     }
-    console.log(totalExpense()) ; 
+    // console.log(totalExpense(name)) ; 
 
-   const totalBalance =() => {
-    return totalIncome() - totalExpense() ; 
+   const totalBalance =(name) => {
+    return totalIncome(name) - totalExpense(name) ; 
    }
 
-   const transactionHistory = () => {
-    const history = [...incomes, ...expenses]
+   const transactionHistory = (name) => {
+
+    const history = [...incomes.filter((income) => income.name===name), ...expenses.filter((expense) => expense.name === name)]
     history.sort((a, b) => {
         return new Date(b.createdAt) - new Date(a.createdAt)
     })
@@ -111,8 +140,8 @@ export const GlobalContextProvider  = ({children}) => {
     return history.slice(0, 3)
 }
     
-const viewTransactions = () => {
-    const history = [...incomes, ...expenses]
+const viewTransactions = (name) => {
+    const history = [...incomes.filter((income) => income.name===name), ...expenses.filter((expense) => expense.name === name)]
     history.sort((a, b) => {
         return new Date(b.createdAt) - new Date(a.createdAt)
     })
@@ -124,7 +153,9 @@ const viewTransactions = () => {
     
 
     return (
-        <GlobalContext.Provider value={{addIncome ,
+        <GlobalContext.Provider value={{
+        setUser,
+        addIncome ,
         getIncomes ,
         incomes ,
         deleteIncome, 
@@ -138,7 +169,7 @@ const viewTransactions = () => {
         transactionHistory,
         error , 
         setError,
-        viewTransactions
+        viewTransactions,
          }}>
             {children}
         </GlobalContext.Provider>

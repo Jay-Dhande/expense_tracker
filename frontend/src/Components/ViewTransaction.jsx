@@ -7,12 +7,12 @@ import { useEffect } from 'react';
 export default function ViewTransaction() {
     
     const {viewTransactions , getExpenses , getIncomes  ,totalBalance} = useGlobalContext() ; 
-    
-    const [...history] = viewTransactions() ;
+    const setName = localStorage.getItem("name") ; 
+    const [...history] = viewTransactions(setName) ;
 
     useEffect(() =>{
-        getIncomes()
-        getExpenses()
+        getIncomes(setName)
+        getExpenses(setName)
     }, [])
     
     return (
@@ -44,7 +44,7 @@ export default function ViewTransaction() {
 
         </div>
         <div className="net-balance">
-            Net-Balance : {totalBalance()}
+            Net-Balance : {totalBalance(setName)}
         </div>
     </ViewTransactionStyled>
   )

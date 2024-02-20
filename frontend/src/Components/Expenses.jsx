@@ -12,7 +12,7 @@ export default function Expenses() {
     const {addExpense,expenses, getExpenses, deleteExpense, totalExpense} = useGlobalContext()
 
     useEffect(() =>{
-        getExpenses()
+        getExpenses(localStorage.getItem("name")) ; 
     }, [])
 
 
@@ -21,7 +21,7 @@ export default function Expenses() {
         <InnerLayout>
         <h1>Expenses</h1>
         <h2 className="total-income">
-            Total Expenses : <span>{totalExpense()}</span>
+            Total Expenses : <span>{totalExpense(localStorage.getItem("name"))}</span>
         </h2>
 
         <div className="income-content">
@@ -30,8 +30,8 @@ export default function Expenses() {
                 </div>
                 
                 <div className="incomes">
-                    {expenses.map((expense) => {
-                      const {_id, title, amount, date, category, description, type} = expense;
+                    {expenses.filter((exp) => exp.name === localStorage.getItem("name")).map((expense) => {
+                      const {_id, title, amount, date, category, description, type , name} = expense;
                       return <IncomeItem
                           key={_id}
                           id={_id} 
@@ -40,6 +40,7 @@ export default function Expenses() {
                           amount={amount} 
                           date={date} 
                           type={type}
+                          name={name}
                           category={category} 
                           indicatorColor="var(--color-green)"
                           deleteItem={deleteExpense}

@@ -4,8 +4,8 @@ import { useGlobalContext } from '../context/GlobalContext'
 
 export default function History() {
     const {transactionHistory} = useGlobalContext();
-  
-    const [...history] = transactionHistory()
+    const setName = localStorage.getItem("name") ; 
+    const [...history] = transactionHistory(setName) ; 
 
   return (
     <HistoryStyled>

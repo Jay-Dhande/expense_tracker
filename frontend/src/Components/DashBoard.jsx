@@ -10,6 +10,7 @@ import History from './History' ;
 export default function DashBoard() {
   const {incomes , expenses ,getExpenses , getIncomes , totalIncome , totalExpense , totalBalance} = useGlobalContext() ; 
  
+  const setName = localStorage.getItem("name") ; 
   // const gIncome =  getIncomes() ; 
   // const gExp = getExpenses();
   useEffect(() =>{
@@ -18,9 +19,7 @@ export default function DashBoard() {
 useEffect(() =>{
   getExpenses(localStorage.getItem("name"))
 }, [])
-  // const tIncome = totalIncome() ; 
-  // const tExp = totalExpense() ; 
-  // const tBal = totalBalance() ; 
+
   return (
     <DashBoardStyled>
         <InnerLayout>
@@ -32,19 +31,19 @@ useEffect(() =>{
                             <div className="income">
                                 <h2>Total Income</h2>
                                 <p>
-                                    {dollar} {totalIncome()}
+                                    {dollar} {totalIncome(setName)}
                                 </p>
                             </div>
                             <div className="expense">
                                 <h2>Total Expense</h2>
                                 <p>
-                                    {dollar} {totalExpense()}
+                                    {dollar} {totalExpense(setName)}
                                 </p>
                             </div>
                             <div className="balance">
                                 <h2>Total Balance</h2>
                                 <p>
-                                    {dollar} {totalBalance()}
+                                    {dollar} {totalBalance(setName)}
                                 </p>
                             </div>
                         </div>
@@ -54,19 +53,19 @@ useEffect(() =>{
                         <h2 className="salary-title">Min <span>Salary</span>Max</h2>
                         <div className="salary-item">
                             <p>
-                                ${incomes.length>=1 ? Math.min(...incomes.map(item => item.amount)) : 0}
+                                ${incomes.filter(income =>  income.name === setName).length>=1 ? Math.min(...incomes.map(item => item.amount)) : 0}
                             </p>
                             <p>
-                                ${incomes.length>=1 ? Math.max(...incomes.map(item => item.amount)) : 0}
+                                ${incomes.filter(income =>  income.name === setName).length>=1 ? Math.max(...incomes.map(item => item.amount)) : 0}
                             </p>
                         </div>
                         <h2 className="salary-title">Min <span>Expense</span>Max</h2>
                         <div className="salary-item">
                             <p>
-                                ${expenses.length>=1 ? Math.min(...expenses.map(item => item.amount)) : 0}
+                                ${expenses.filter(income =>  income.name === setName).length>=1 ? Math.min(...expenses.map(item => item.amount)) : 0}
                             </p>
                             <p>
-                                ${expenses.length>=1 ? Math.max(...expenses.map(item => item.amount)): 0}
+                                ${expenses.filter(income =>  income.name === setName).length>=1 ? Math.max(...expenses.map(item => item.amount)): 0}
                             </p>
                         </div>
                     </div>

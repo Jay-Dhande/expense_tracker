@@ -22,7 +22,7 @@ export default function Form() {
         name:localStorage.getItem("name")
     })
 
-    const { title, amount,  category, description , date } = inputState;
+    const { title, amount,  category, description , date , name} = inputState;
     
     const handleInput = name => e => {
         setInputState({...inputState , [name]:e.target.value})

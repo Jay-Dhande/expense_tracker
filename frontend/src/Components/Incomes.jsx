@@ -21,7 +21,7 @@ export default function Incomes() {
         <InnerLayout>
         <h1>Incomes</h1>
         <h2 className="total-income">
-            Total Income : <span>{totalIncome()}</span>
+            Total Income : <span>{totalIncome(localStorage.getItem("name"))}</span>
         </h2>
 
         <div className="income-content">
@@ -30,7 +30,7 @@ export default function Incomes() {
                 </div>
                 
                 <div className="incomes">
-                    {incomes.map((income) => {
+                    {incomes.filter((income) => income.name===localStorage.getItem("name")).map((income) => {
                       const {_id, title, amount, date, category, description, type ,name} = income;
                       return <IncomeItem
                           key={_id}
@@ -40,7 +40,7 @@ export default function Incomes() {
                           amount={amount} 
                           date={date} 
                           type={type}
-                          name={localStorage.getItem("name")}
+                          name={name}
                           category={category} 
                           indicatorColor="var(--color-green)"
                           deleteItem={deleteIncome}

@@ -31,7 +31,7 @@ export default function Signup() {
           <input type="number" placeholder='Enter contact Number' value={userData.phoneNo}  onChange={(e)=>{setUserData({...userData, phoneNo:e.target.value})}}/>
 
           <button onClick={submitHandler}>Sign/Up</button>
-          <p>Already an account </p>
+          <p>Already an account <a href="">LogIn</a></p>
         </form>
       </div>
     </SignUpStyled>
