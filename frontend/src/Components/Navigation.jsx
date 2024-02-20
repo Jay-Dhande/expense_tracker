@@ -11,7 +11,10 @@ export default function Navigation(props) {
     // setActive(1)
     console.log("clicked signOut") ; 
     console.log(props.setIsLoggedIn) ; 
-    props.setIsLoggedIn(false) ; 
+    
+    localStorage.removeItem("name");
+    props.setIsLoggedIn(false);
+
     navigate("/") ; 
   }
   return (
@@ -49,8 +52,8 @@ export default function Navigation(props) {
 
 
 const NavStyled = styled.nav`
-    padding: 2rem 1.5rem;
-    width: 18vw;
+    padding: 1.5rem 1rem;
+    width: 20vw;
     height: 100%;
     background: rgba(252, 246, 249, 0.78);
     border: 3px solid #FFFFFF;

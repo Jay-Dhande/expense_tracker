@@ -3,7 +3,7 @@ import bg from './img/bg(1).png';
 import { MainLayout } from "./styles/Layouts";
 import Orb from "./Components/Orb";
 import Navigation from "./Components/Navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState  ,useEffect} from "react";
 import DashBoard from "./Components/DashBoard";
 import Incomes from "./Components/Incomes";
 import Expenses from "./Components/Expenses";
@@ -20,7 +20,14 @@ export default function App() {
   const global = useGlobalContext() ; 
   const [username  , setUserName] = useState("");
 
-   
+  useEffect(() => {
+    // Check if the user is logged in on component mount
+    const storedName = localStorage.getItem('name');
+    if (storedName) {
+      setIsLoggedIn(true);
+      setUserName(storedName);
+    }
+  }, []);
    const displayData = () => {
       switch(active){
         case 1:
