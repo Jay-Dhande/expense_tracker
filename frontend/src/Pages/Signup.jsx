@@ -5,21 +5,32 @@ import bg_img from "../img/Billdu_Tracking-business-expenses-and-expense-tracker
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-export default function Signup() {
+
+
+
+export default function Signup(props) {
   const [userData,setUserData]=useState({
     name:"",
     passWord:"",
     phoneNo:""
   })
-  // const Navigate=useNavigate();
+  const navigate=useNavigate();
   const submitHandler=async(e)=>{
     e.preventDefault();
     console.log(userData)
     //api call to mongodb to save the user data
-    const res = await axios.post("http://localhost:3000/signUp", userData);
-    // if(res.data==="done"){
-    //   Navigate("/login");
-    // }
+
+    try {
+      const res = await axios.post("http://localhost:3000/signUp", userData);
+      if(res.data==="done"){
+        navigate("/");
+        // props.setIsLoggedIn(true) ; 
+        // props.setUserName(userData.name);
+      }
+      
+    } catch (error) {
+      console.log(error) ; 
+    }
   }
   return (
     <SignUpStyled>
@@ -31,7 +42,7 @@ export default function Signup() {
           <input type="number" placeholder='Enter contact Number' value={userData.phoneNo}  onChange={(e)=>{setUserData({...userData, phoneNo:e.target.value})}}/>
 
           <button onClick={submitHandler}>Sign/Up</button>
-          <p>Already an account <a href="">LogIn</a></p>
+          <p>Already an account <Link to="/">LogIn</Link></p>
         </form>
       </div>
     </SignUpStyled>

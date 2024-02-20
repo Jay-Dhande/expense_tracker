@@ -10,7 +10,7 @@ import Expenses from "./Components/Expenses";
 import { GlobalContextProvider } from "./context/GlobalContext";
 import { useGlobalContext } from "./context/GlobalContext";
 import ViewTransaction from "./Components/ViewTransaction";
-// import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 
@@ -49,22 +49,36 @@ export default function App() {
   //   return children
   // };
   return (
+    <BrowserRouter>
     <GlobalContextProvider>
-    <AppStyled className="App">
-      {isloggedIn&&<MainLayout>
-          {orbMemo}
-
-        <Navigation active={active} setActive={setActive}/>
-          {/* <Login/> */}
-          {/* <SignUp/> */}
-          <main>
-            {displayData()}
-          </main>
-       
-      </MainLayout>}
-      {!isloggedIn&& <Login isloggedIn={isloggedIn} setIsLoggedIn={setIsLoggedIn} username={username} setUserName={setUserName}/>}
-    </AppStyled>
+      <AppStyled className="App">
+        {isloggedIn ? (
+          <MainLayout>
+            {orbMemo}
+            <Navigation active={active} setActive={setActive} />
+            <main>{displayData()}</main>
+          </MainLayout>
+        ) : (
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Login
+                  isloggedIn={isloggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  setUserName={setUserName}
+                />
+              }
+            />
+            <Route
+              path="/signup"
+              element={<Signup setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isloggedIn={isloggedIn}/>}
+            />
+          </Routes>
+        )}
+      </AppStyled>
     </GlobalContextProvider>
+  </BrowserRouter>
 
   );
 }

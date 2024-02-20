@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
-// import {  Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 // import {bg_img} from '../img/bg_img.png'
 import { useState } from 'react';
 import { useGlobalContext } from '../context/GlobalContext';
+
+
+
 const Login = (props) => {
   const {setUser} = useGlobalContext() ; 
   
@@ -13,18 +16,23 @@ const Login = (props) => {
     e.preventDefault();
     // console.log(userData)
     //api call to check the user
-    const resp =await axios.get("http://localhost:3000/login" ,{params:{userData}})
-    if(resp.data==="verified"){
-      // localstorage.saveItem(userData.name)
-      localStorage.setItem("name",userData.name);
-      //make islogged in true
-      props.setIsLoggedIn(true)
-      // props.setUserName(localStorage.getItem("name")) ;
-      console.log("logged in" , setUser(localStorage.getItem("name")))  ; 
+    try {
       
-    }
-    else{
-      
+      const resp =await axios.get("http://localhost:3000/login" ,{params:{userData}})
+      if(resp.data==="verified"){
+        // localstorage.saveItem(userData.name)
+        localStorage.setItem("name",userData.name);
+        //make islogged in true
+        props.setIsLoggedIn(true)
+        props.setUserName(userData.name) ;
+        setUser(userData.name)  ; 
+        
+      }
+      else{
+        
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
   return (
@@ -35,7 +43,7 @@ const Login = (props) => {
           <input type="text" placeholder="enter username"  value={userData.name}  onChange={(e)=>{setuserData({...userData, name:e.target.value})}}/>
           <input type="password" placeholder="password"  value={userData.passWord}  onChange={(e)=>{setuserData({...userData, passWord:e.target.value})}}/>
           <button onClick={loginHandler}>Login</button>
-          <p>don't have an account <a href="">SignUp</a></p>
+          <p>don't have an account <Link to="/signup">SignUp</Link></p>
           
         </form>
       </div>
