@@ -37,7 +37,7 @@ app.get("/login", async(req,res)=>{
     try {
         const resp =await UserModel.find({name:name, passWord:passWord});
         console.log(resp)
-        if(resp.length ===1){
+        if(resp.length === 1){
             res.send("verified")
             // console.log("logged in")
         }

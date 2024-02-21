@@ -28,6 +28,7 @@ export default function App() {
       setUserName(storedName);
     }
   }, []);
+
    const displayData = () => {
       switch(active){
         case 1:
@@ -48,13 +49,6 @@ export default function App() {
     return <Orb />
   }, [])
   
-  // const ProtectedRoute = ({ children }) => {
-  //   if (!username) {
-  //     return <Navigate to="/login" />;
-  //   }
-
-  //   return children
-  // };
   return (
     <BrowserRouter>
     <GlobalContextProvider>
